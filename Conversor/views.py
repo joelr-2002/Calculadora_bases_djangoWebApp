@@ -24,7 +24,7 @@ def decimal_view(request):
 
 def bases_to_binary(request, number, type):
     
-    # Convertir number a entero
+    # Convertir number a la base correspondiente
     if type == 'hexadecimal':
         number = int(number, 16)
     elif type == 'octal':
@@ -32,13 +32,9 @@ def bases_to_binary(request, number, type):
     else:
         number = int(number)
     
-    if type == 'decimal':
-        binario = bin(number)
-    elif type == 'hexadecimal':
-        binario = bin(number)
-    elif type == 'octal':
-        binario = bin(number)
-        
+    binario = bin(number)
+
+    #Separa el '0b'de la cadena del binario
     binario = binario.split("b")[1]
     cadena = "Binario: {}".format(binario)
     partes = cadena.split(": ")
