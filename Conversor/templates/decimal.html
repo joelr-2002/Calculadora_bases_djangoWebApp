@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Decimal Converter</title>
+    <style>
+        .calculator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .calculator input {
+            margin-bottom: 10px;
+        }
+        .calculator button {
+            margin-top: 10px;
+        }
+        .calculator .result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="binary" placeholder="Binary">
+        <input type="text" id="hexadecimal" placeholder="Hexadecimal">
+        <input type="text" id="octal" placeholder="Octal">
+        <button onclick="convert()">Convert</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convert() {
+            var binary = document.getElementById("binary").value;
+            var hexadecimal = document.getElementById("hexadecimal").value;
+            var octal = document.getElementById("octal").value;
+
+            // Perform the conversion logic here
+
+            // Display the result
+            document.getElementById("result").innerHTML = "Result: " + convertedValue;
+        }
+    </script>
+</body>
+</html>
