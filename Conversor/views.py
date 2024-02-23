@@ -24,21 +24,82 @@ def decimal_view(request):
 
 def bases_to_binary(request, number, type):
     
-    # Convertir number a la base correspondiente
+    # Convertir number a entero
     if type == 'hexadecimal':
         number = int(number, 16)
     elif type == 'octal':
         number = int(number, 8)
     else:
         number = int(number)
-    
+        
+    # Convertir a binario
     binario = bin(number)
-
-    #Separa el '0b'de la cadena del binario
+    
+    #binario = '1010'
+        
     binario = binario.split("b")[1]
     cadena = "Binario: {}".format(binario)
     partes = cadena.split(": ")
     diccionario = {partes[0].strip(): partes[1].strip()}
     return HttpResponse(json.dumps(diccionario), content_type="application/json")
    
+# Convertidores de bases: a hexadecimal
+def bases_to_hexadecimal(request, number, type):
+    
+    # Convertir number a entero
+    if type == 'binario':
+        number = int(number, 2)
+    elif type == 'octal':
+        number = int(number, 8)
+    else:
+        number = int(number)
+        
+    # Convertir a hexadecimal
+    hexadecimal = hex(number)
+    
+    hexadecimal = hexadecimal.split("x")[1]
+    cadena = "Hexadecimal: {}".format(hexadecimal)
+    partes = cadena.split(": ")
+    diccionario = {partes[0].strip(): partes[1].strip()}
+    return HttpResponse(json.dumps(diccionario), content_type="application/json")
+
 # Convertidores de bases: a octal
+    # El constructor de los números octales es oct()
+    
+def bases_to_octal(request, number, type):
+    
+    # Convertir number a entero
+    if type == 'binario':
+        number = int(number, 2)
+    elif type == 'hexadecimal':
+        number = int(number, 16)
+    else:
+        number = int(number)
+        
+    # Convertir a octal
+    octal = oct(number)
+    
+    octal = octal.split("o")[1]
+    cadena = "Octal: {}".format(octal)
+    partes = cadena.split(": ")
+    diccionario = {partes[0].strip(): partes[1].strip()}
+    return HttpResponse(json.dumps(diccionario), content_type="application/json")
+
+
+    
+# Convertidores de bases: a decimal
+    # El constructor de los números decimales es int()
+def bases_to_decimal(request, number, type):
+    
+    # Convertir number a entero
+    if type == 'hexadecimal':
+        number = int(number, 16)
+    elif type == 'octal':
+        number = int(number, 8)
+    else:
+        number = int(number, 2)
+        
+    cadena = "Decimal: {}".format(number)
+    partes = cadena.split(": ")
+    diccionario = {partes[0].strip(): partes[1].strip()}
+    return HttpResponse(json.dumps(diccionario), content_type="application/json")

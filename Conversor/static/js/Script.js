@@ -30,9 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById('conversionForm');
     const inputType = document.getElementById('inputType');
     const inputValue = document.getElementById('inputValue');
-    const resultContainer = document.getElementById('resultContainer');
+    //const resultContainer = document.getElementById('resultContainer');
     const resultNumber = document.getElementById('result-screen');
     const convertButton = document.getElementById('convertButton');
+    const converterType = document.getElementById('convertidorTipo');
 
     convertButton.addEventListener('click', function (event) {
         event.preventDefault();
@@ -73,7 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
             // GET a bases_to_binary recibe un httpresponse
-            fetch(`/Conversor/bases_to_binary/${value}/${selectedValue}`)
+
+            //Verifica el nombre del Convertidor
+            if (converterType.innerText === "Convertir a Binario") {
+                
+                fetch(`/Conversor/bases_to_binary/${value}/${selectedValue}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error en la solicitud');
@@ -102,6 +107,100 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => {
                     alert('Error en la solicitud');
                 });
+
+            }
+
+            //Verifica el nombre del Convertidor
+            if (converterType.innerText === "Convertir a Decimal") {
+                fetch(`/Conversor/bases_to_decimal/${value}/${selectedValue}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    console.log(data.Decimal);
+                    resultNumber.innerHTML = data.Decimal;
+
+                })
+                .catch(error => {
+                    alert('Error en la solicitud');
+                });
+            }
+
+            //Verifica el nombre del Convertidor
+            if (converterType.innerText === "Convertir a Hexadecimal") {
+                fetch(`/Conversor/bases_to_hexadecimal/${value}/${selectedValue}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    
+                    // Separa cada 6 las cifras hexadecimales de derecha a izquierda
+                    let hexadecimal = data.Hexadecimal;
+                    let result = '';
+                    for (let i = hexadecimal.length - 1; i >= 0; i -= 6) {
+                        result = hexadecimal.substring(i - 5, i + 1) + ' ' + result;
+                    }
+                    result = result.trim();
+                    data.Hexadecimal = result;
+
+                    // si hacen faltas 0 a la izquierda para completar un grupo de 6
+                    if (hexadecimal.length % 6 !== 0) {
+                        let zeros = '0'.repeat(6 - (hexadecimal.length % 6));
+                        data.Hexadecimal = zeros + data.Hexadecimal;
+                    }
+
+                    console.log(data.Hexadecimal);
+
+                    resultNumber.innerHTML = data.Hexadecimal;
+
+                })
+                .catch(error => {
+                    alert('Error en la solicitud');
+                });
+            }
+
+            //Verifica el nombre del Convertidor
+            if (converterType.innerText === "Convertir a Octal") {
+                fetch(`/Conversor/bases_to_octal/${value}/${selectedValue}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la solicitud');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    
+                    // Separa cada 3 las cifras hexadecimales de derecha a izquierda
+                    let octal = data.Octal;
+                    let result = '';
+                    for (let i = octal.length - 1; i >= 0; i -= 3) {
+                        result = octal.substring(i - 2, i + 1) + ' ' + result;
+                    }
+                    result = result.trim();
+                    data.Octal = result;
+
+                    // si hacen faltas 0 a la izquierda para completar un grupo de 3
+                    if (octal.length % 3 !== 0) {
+                        let zeros = '0'.repeat(3 - (octal.length % 3));
+                        data.Octal = zeros + data.Octal;
+                    }
+
+                    console.log(data.Octal);
+
+                    resultNumber.innerHTML = data.Octal;
+
+                })
+                .catch(error => {
+                    alert('Error en la solicitud');
+                });
+            }
     });
 });
 
